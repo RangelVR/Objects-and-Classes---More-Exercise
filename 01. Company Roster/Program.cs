@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,9 +6,9 @@ namespace _01._Company_Roster
 {
     class Program
     {
-        class Employee
+        class Emplyee
         {
-            public Employee(string name, decimal salary)
+            public Emplyee(string name, decimal salary)
             {
                 Name = name;
                 Salary = salary;
@@ -19,22 +19,21 @@ namespace _01._Company_Roster
 
         class Department
         {
-            public Department(string departmentName)
+            public Department(string nameOfDepartment)
             {
-                DepartmentName = departmentName;
+                DepartmentName = nameOfDepartment;
             }
             public string DepartmentName { get; set; }
-            public List<Employee> Employees { get; set; } = new List<Employee>();
+            public List<Emplyee> Employees { get; set; } = new List<Emplyee>();
             public decimal TotalSalaries { get; set; }
 
-            public void AddNewEmplyee(string name, decimal salary)
+            public void AddEmployee(string name, decimal salary)
             {
-                Employees.Add(new Employee(name ,salary));
+                Employees.Add(new Emplyee(name, salary));
 
                 TotalSalaries += salary;
             }
         }
-
 
         static void Main(string[] args)
         {
@@ -43,14 +42,14 @@ namespace _01._Company_Roster
 
             for (int i = 0; i < n; i++)
             {
-                string[] employeeInfo = Console.ReadLine().Split().ToArray();
+                string[] inputInfo = Console.ReadLine().Split().ToArray();
 
-                if (!departments.Any(x => x.DepartmentName == employeeInfo[2]))
+                if (!departments.Any(x => x.DepartmentName == inputInfo[2]))
                 {
-                    departments.Add(new Department(employeeInfo[2]));
+                    departments.Add(new Department(inputInfo[2]));
                 }
 
-                departments.Find(x => x.DepartmentName == employeeInfo[2]).AddNewEmplyee(employeeInfo[0], decimal.Parse(employeeInfo[1]));
+                departments.Find(x => x.DepartmentName == inputInfo[2]).AddEmployee(inputInfo[0], decimal.Parse(inputInfo[1]));
             }
 
             Department bestDepartment = departments.OrderByDescending(x => x.TotalSalaries / x.Employees.Count()).First();
